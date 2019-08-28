@@ -10,6 +10,7 @@ const HtmlFilesDir = "./html/";
 
 var cssClassesArray = [];
 var htmlFilesPathArray = [];
+var unusedClassNames = [];
 
 function extractClasses() {
   sass.render(
@@ -46,24 +47,44 @@ function getHtmlFilesPathArray() {
 }
 
 function checkForUnusedCssClass() {
-  htmlFilesPathArray.forEach(html => {
+  htmlFilesPathArray.forEach((html, index) => {
     const htmlContent = fs.readFileSync(html.path);
     let $ = cheerio.load(htmlContent);
 
-    // cssClassesArray.forEach(css => {
-    //   if (css.checked) {
-    //     return;
-    //   } else {
-    //     let isUsed = $("." + css.class).length !== 0;
+    console.log("Checking:", html.path);
 
-    //     if (isUsed) {
-    //       css.checked = true;
-    //     }
-    //   }
-    // });
+    cssClassesArray.forEach(css => {
+      if (css.checked) {
+        return false;
+      } else {
+        let isUsed = $(css.class).length !== 0;
 
-    console.log($(".georgee").length !== 0, html.path);
+        if (isUsed) {
+          css.checked = true;
+        }
+      }
+    });
+
+    if (index === htmlFilesPathArray.length - 1) {
+      sortUnusedClasses();
+    }
   });
+}
+
+function sortUnusedClasses() {
+  cssClassesArray.forEach(element => {
+    if (!element.checked) {
+      unusedClassNames.push(element.class);
+    }
+  });
+
+  // console.log("Unused Classes Array:", unusedClassNames);
+  console.log(
+    "Total Unused:",
+    unusedClassNames.length,
+    "From:",
+    cssClassesArray.length
+  );
 }
 
 getHtmlFilesPathArray();
