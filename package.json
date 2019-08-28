@@ -1,0 +1,20 @@
+{
+  "name": "unused-css-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "@types/sass": "^1.16.0",
+    "cheerio": "^1.0.0-rc.3",
+    "glob": "^7.1.4",
+    "list-selectors": "^2.0.0",
+    "sass": "^1.22.10",
+    "string-extract-class-names": "^5.8.40"
+  }
+}
